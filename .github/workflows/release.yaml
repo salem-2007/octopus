@@ -20,8 +20,9 @@ jobs:
     name: release
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: lingyuins/octopus
       GHCR_IMAGE: ghcr.io/${{ github.repository }}
+      # 推送命名空间取自登录 Docker Hub 的账号，避免写死上游仓库导致 403
+      DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/octopus
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       RELEASE_TAG: ${{ inputs.tag != '' && inputs.tag || github.ref_name }}
